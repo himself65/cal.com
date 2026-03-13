@@ -1,6 +1,6 @@
 import { readFileSync } from "node:fs";
 import Handlebars from "handlebars";
-import type { SendVerificationRequestParams } from "next-auth/providers/email";
+type SendVerificationRequestParams = { identifier: string; url: string };
 import type { TransportOptions } from "nodemailer";
 import nodemailer from "nodemailer";
 import path from "node:path";

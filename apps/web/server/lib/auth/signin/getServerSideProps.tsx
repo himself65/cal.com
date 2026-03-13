@@ -1,9 +1,9 @@
 import type { GetServerSidePropsContext } from "next";
-import { getProviders, getCsrfToken } from "next-auth/react";
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
-  const csrfToken = await getCsrfToken(context);
-  const providers = await getProviders();
+  const csrfToken = globalThis.crypto.randomUUID();
+  // Providers are now configured in better-auth, not fetched from next-auth
+  const providers = null;
   return {
     props: {
       csrfToken,

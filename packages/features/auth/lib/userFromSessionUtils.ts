@@ -8,7 +8,7 @@ import { safeStringify } from "@calcom/lib/safeStringify";
 import prisma from "@calcom/prisma";
 import { teamMetadataSchema, userMetadata } from "@calcom/prisma/zod-utils";
 import type { GetServerSidePropsContext, NextApiRequest } from "next";
-import type { Session } from "next-auth";
+import type { CalSession as Session } from "@calcom/features/auth/lib/better-auth-types";
 
 type Maybe<T> = T | null | undefined;
 

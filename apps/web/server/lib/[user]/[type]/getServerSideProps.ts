@@ -1,5 +1,5 @@
 import { type GetServerSidePropsContext } from "next";
-import type { Session } from "next-auth";
+import type { CalSession as Session } from "@calcom/features/auth/lib/better-auth-types";
 import { z } from "zod";
 
 import { getServerSession } from "@calcom/features/auth/lib/getServerSession";

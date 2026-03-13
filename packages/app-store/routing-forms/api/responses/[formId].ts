@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import { getSession } from "next-auth/react";
+import { getServerSession as getSession } from "@calcom/features/auth/lib/getServerSession";
 
 import {
   entityPrismaWhereClause,

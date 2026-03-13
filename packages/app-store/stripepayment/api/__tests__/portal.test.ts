@@ -1,5 +1,5 @@
 import type { NextApiRequest } from "next";
-import type { Session } from "next-auth";
+import type { CalSession as Session } from "@calcom/features/auth/lib/better-auth-types";
 import { describe, it, expect, vi, beforeEach } from "vitest";
 
 import { TeamRepository } from "@calcom/features/ee/teams/repositories/TeamRepository";

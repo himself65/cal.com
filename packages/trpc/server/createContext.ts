@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import type { GetServerSidePropsContext, NextApiRequest, NextApiResponse } from "next";
-import type { Session } from "next-auth";
+import type { CalSession as Session } from "@calcom/features/auth/lib/better-auth-types";
 import type { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
 import { getLocale } from "@calcom/features/auth/lib/getLocale";

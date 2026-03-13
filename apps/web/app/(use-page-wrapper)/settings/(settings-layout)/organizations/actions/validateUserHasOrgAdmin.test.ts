@@ -1,4 +1,4 @@
-import type { Session } from "next-auth";
+import type { CalSession as Session } from "@calcom/features/auth/lib/better-auth-types";
 import { redirect } from "next/navigation";
 import { describe, it, vi, expect, beforeEach, type MockedFunction } from "vitest";
 

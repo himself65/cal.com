@@ -9,7 +9,7 @@ import { viewerOrganizationsRouter } from "@calcom/trpc/server/routers/viewer/or
 import { createRouterCaller } from "app/_trpc/context";
 import { unstable_cache } from "next/cache";
 import { redirect } from "next/navigation";
-import type { Session } from "next-auth";
+import type { CalSession as Session } from "@calcom/features/auth/lib/better-auth-types";
 
 const getCachedAttributes = unstable_cache(
   async (orgId: number) => {

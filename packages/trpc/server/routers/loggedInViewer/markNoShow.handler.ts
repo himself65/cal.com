@@ -1,4 +1,4 @@
-import type { Session } from "next-auth";
+import type { CalSession as Session } from "@calcom/features/auth/lib/better-auth-types";
 
 import { handleMarkAttendeesAndHostNoShow } from "@calcom/features/handleMarkNoShow";
 import type { TrpcSessionUser } from "@calcom/trpc/server/types";

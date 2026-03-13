@@ -6,7 +6,7 @@ import prisma from "@calcom/prisma";
 import { MembershipRole } from "@calcom/prisma/enums";
 import type { SearchParams } from "app/_types";
 import { unstable_cache } from "next/cache";
-import type { Session } from "next-auth";
+import type { CalSession as Session } from "@calcom/features/auth/lib/better-auth-types";
 import { TeamsListing } from "~/ee/teams/components/TeamsListing";
 import { TeamsCTA } from "./CTA";
 

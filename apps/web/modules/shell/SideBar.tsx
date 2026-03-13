@@ -1,4 +1,4 @@
-import type { User as UserAuth } from "next-auth";
+import type { CalUser as UserAuth } from "@calcom/features/auth/lib/better-auth-types";
 import { useSession } from "@calcom/features/auth/lib/auth-client-switch";
 import dynamic from "next/dynamic";
 import Link from "next/link";

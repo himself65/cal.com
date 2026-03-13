@@ -1,6 +1,5 @@
 import { jwtVerify } from "jose";
 import type { GetServerSidePropsContext } from "next";
-import { getCsrfToken } from "next-auth/react";
 
 import { getServerSession } from "@calcom/features/auth/lib/getServerSession";
 import { IS_OUTLOOK_LOGIN_ENABLED } from "@calcom/features/auth/lib/outlook";
@@ -89,7 +88,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
   }
   return {
     props: {
-      csrfToken: await getCsrfToken(context),
+      csrfToken: globalThis.crypto.randomUUID(),
       isGoogleLoginEnabled: IS_GOOGLE_LOGIN_ENABLED,
       isOutlookLoginEnabled: IS_OUTLOOK_LOGIN_ENABLED,
       isSAMLLoginEnabled,

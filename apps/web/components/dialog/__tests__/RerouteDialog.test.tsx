@@ -1,6 +1,6 @@
 import { TooltipProvider } from "@radix-ui/react-tooltip";
 import { act, fireEvent, render, screen } from "@testing-library/react";
-import type { Session } from "next-auth";
+import type { CalSession as Session } from "@calcom/features/auth/lib/better-auth-types";
 import { SessionProvider } from "@calcom/features/auth/lib/auth-client-switch";
 import { vi } from "vitest";
 

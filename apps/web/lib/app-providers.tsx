@@ -8,8 +8,10 @@
  */
 import { TooltipProvider } from "@radix-ui/react-tooltip";
 import { dir } from "i18next";
-import type { Session } from "next-auth";
-import { useSession } from "next-auth/react";
+import { useSession } from "@calcom/features/auth/lib/auth-client-switch";
+import type { CalSession } from "@calcom/features/auth/lib/better-auth-types";
+
+type Session = CalSession;
 import { appWithTranslation } from "next-i18next";
 import type { SSRConfig } from "next-i18next/dist/types/types";
 import { ThemeProvider } from "next-themes";

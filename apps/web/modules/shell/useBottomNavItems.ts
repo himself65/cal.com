@@ -1,4 +1,4 @@
-import type { User as UserAuth } from "next-auth";
+import type { CalUser as UserAuth } from "@calcom/features/auth/lib/better-auth-types";
 import posthog from "posthog-js";
 
 import { IS_DUB_REFERRALS_ENABLED } from "@calcom/lib/constants";

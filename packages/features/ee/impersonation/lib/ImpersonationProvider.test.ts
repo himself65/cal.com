@@ -1,4 +1,4 @@
-import type { Session } from "next-auth";
+import type { CalSession as Session } from "@calcom/features/auth/lib/better-auth-types";
 import { describe, expect, it, vi } from "vitest";
 
 import { UserPermissionRole } from "@calcom/prisma/enums";

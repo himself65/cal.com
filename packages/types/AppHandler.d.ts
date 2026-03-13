@@ -1,5 +1,5 @@
 import type { NextApiHandler } from "next";
-import type { Session } from "next-auth";
+import type { CalSession as Session } from "@calcom/features/auth/lib/better-auth-types";
 
 import type { Credential } from "@calcom/prisma/client";
 
