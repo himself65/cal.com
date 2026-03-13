@@ -135,7 +135,7 @@ packages/lib/                # Shared utilities
 - **Language**: TypeScript (strict)
 - **Database**: PostgreSQL with Prisma ORM
 - **API**: tRPC for type-safe APIs
-- **Auth**: NextAuth.js
+- **Auth**: better-auth
 - **Styling**: Tailwind CSS
 - **Testing**: Vitest (unit), Playwright (E2E)
 - **i18n**: next-i18next

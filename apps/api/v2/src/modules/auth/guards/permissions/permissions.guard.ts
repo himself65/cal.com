@@ -7,7 +7,6 @@ import { TokensService } from "@/modules/tokens/tokens.service";
 import { Injectable, CanActivate, ExecutionContext, ForbiddenException } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 import { Reflector } from "@nestjs/core";
-import { getToken } from "next-auth/jwt";
 
 import { X_CAL_CLIENT_ID } from "@calcom/platform-constants";
 import { hasPermissions } from "@calcom/platform-utils";
@@ -33,14 +32,15 @@ export class PermissionsGuard implements CanActivate {
 
     const request = context.switchToHttp().getRequest();
     const bearerToken = request.get("Authorization")?.replace("Bearer ", "");
-    const nextAuthSecret = this.config.get("next.authSecret", { infer: true });
-    const nextAuthToken = await getToken({ req: request, secret: nextAuthSecret });
+    const sessionToken =
+      request.cookies?.["better-auth.session_token"] || request.cookies?.["__Secure-better-auth.session_token"];
+    const hasSessionCookie = !!sessionToken;
     const oAuthClientId = request.params?.clientId || request.get(X_CAL_CLIENT_ID);
     const apiKey = bearerToken && isApiKey(bearerToken, this.config.get("api.apiKeyPrefix") ?? "cal_");
     const isThirdPartyBearerToken = bearerToken && this.getDecodedThirdPartyAccessToken(bearerToken);
 
-    // only check permissions for accessTokens attached to platform oAuth Client or platform oAuth credentials, not for next token or api key or third party oauth client
-    if (nextAuthToken || apiKey || isThirdPartyBearerToken) {
+    // only check permissions for accessTokens attached to platform oAuth Client or platform oAuth credentials, not for session cookie or api key or third party oauth client
+    if (hasSessionCookie || apiKey || isThirdPartyBearerToken) {
       return true;
     }
 

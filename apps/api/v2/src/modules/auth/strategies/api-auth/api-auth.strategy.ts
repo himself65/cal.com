@@ -16,7 +16,6 @@ import { Logger } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 import { PassportStrategy } from "@nestjs/passport";
 import type { Request } from "express";
-import { getToken } from "next-auth/jwt";
 
 import { INVALID_ACCESS_TOKEN, X_CAL_CLIENT_ID, X_CAL_SECRET_KEY } from "@calcom/platform-constants";
 
@@ -112,17 +111,23 @@ export class ApiAuthStrategy extends PassportStrategy(BaseStrategy, "api-auth") 
         throw new UnauthorizedException(`ApiAuthStrategy - Invalid Bearer token`);
       }
 
-      const nextAuthSecret = this.config.get("next.authSecret", { infer: true });
-      const nextAuthToken = await getToken({ req: request, secret: nextAuthSecret });
-      if (nextAuthToken && nextAuthAllowed) {
+      // Check for better-auth session cookie
+      const sessionToken =
+        request.cookies?.["better-auth.session_token"] || request.cookies?.["__Secure-better-auth.session_token"];
+      if (sessionToken && nextAuthAllowed) {
         request.authMethod = AuthMethods["NEXT_AUTH"];
-        return await this.authenticateNextAuth(nextAuthToken, request);
+        const sessionUser = await this.userRepository.findBySessionToken(sessionToken);
+        if (sessionUser) {
+          const organizationId = this.usersService.getUserMainOrgId(sessionUser) as number;
+          request.organizationId = organizationId;
+          return this.success(this.getSuccessUser(sessionUser));
+        }
       }
 
-      const noAuthProvided = !oAuthClientId && !oAuthClientSecret && !bearerToken && !nextAuthToken;
-      const onlyClientIdProvided = !!oAuthClientId && !oAuthClientSecret && !bearerToken && !nextAuthToken;
+      const noAuthProvided = !oAuthClientId && !oAuthClientSecret && !bearerToken && !sessionToken;
+      const onlyClientIdProvided = !!oAuthClientId && !oAuthClientSecret && !bearerToken && !sessionToken;
       const onlyClientSecretProvided =
-        !oAuthClientId && !!oAuthClientSecret && !bearerToken && !nextAuthToken;
+        !oAuthClientId && !!oAuthClientSecret && !bearerToken && !sessionToken;
 
       if (noAuthProvided) {
         throw new UnauthorizedException(`ApiAuthStrategy - ${NO_AUTH_PROVIDED_MESSAGE}`);
