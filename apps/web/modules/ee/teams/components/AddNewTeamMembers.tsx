@@ -1,7 +1,7 @@
 "use client";
 
 import { keepPreviousData } from "@tanstack/react-query";
-import { useSession } from "next-auth/react";
+import { useSession } from "@calcom/features/auth/lib/auth-client-switch";
 import { useRouter } from "next/navigation";
 import posthog from "posthog-js";
 import { useState, useMemo } from "react";

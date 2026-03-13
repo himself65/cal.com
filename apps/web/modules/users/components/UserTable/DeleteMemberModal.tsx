@@ -1,4 +1,4 @@
-import { useSession } from "next-auth/react";
+import { useSession } from "@calcom/features/auth/lib/auth-client-switch";
 import type { Dispatch } from "react";
 
 import { Dialog } from "@calcom/features/components/controlled-dialog";

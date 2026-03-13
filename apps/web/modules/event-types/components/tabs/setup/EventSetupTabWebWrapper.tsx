@@ -1,4 +1,4 @@
-import { useSession } from "next-auth/react";
+import { useSession } from "@calcom/features/auth/lib/auth-client-switch";
 
 import { useOrgBranding } from "@calcom/features/ee/organizations/context/provider";
 import { WEBSITE_URL } from "@calcom/lib/constants";

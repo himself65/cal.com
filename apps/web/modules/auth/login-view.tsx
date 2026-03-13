@@ -25,7 +25,7 @@ import type { getServerSideProps } from "@server/lib/auth/login/getServerSidePro
 import { Eye, EyeOff } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { signIn } from "next-auth/react";
+import { signIn } from "@calcom/features/auth/lib/compat/signIn";
 import { useEffect, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { z } from "zod";

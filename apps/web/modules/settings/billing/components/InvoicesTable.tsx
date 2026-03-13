@@ -2,7 +2,7 @@
 
 import { keepPreviousData } from "@tanstack/react-query";
 import { usePathname } from "next/navigation";
-import { useSession } from "next-auth/react";
+import { useSession } from "@calcom/features/auth/lib/auth-client-switch";
 import { useState, useEffect, useRef } from "react";
 
 import dayjs from "@calcom/dayjs";

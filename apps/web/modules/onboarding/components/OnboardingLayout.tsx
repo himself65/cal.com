@@ -1,7 +1,7 @@
 "use client";
 
 import classNames from "classnames";
-import { signOut } from "next-auth/react";
+import { signOut } from "@calcom/features/auth/lib/auth-client-switch";
 import { Children, type ReactNode } from "react";
 import { Toaster } from "sonner";
 

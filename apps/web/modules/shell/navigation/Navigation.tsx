@@ -1,4 +1,4 @@
-import { useSession } from "next-auth/react";
+import { useSession } from "@calcom/features/auth/lib/auth-client-switch";
 import { useMemo } from "react";
 
 import { useIsEmbed } from "@calcom/embed-core/embed-iframe";

@@ -1,6 +1,6 @@
 "use client";
 
-import { useSession } from "next-auth/react";
+import { useSession } from "@calcom/features/auth/lib/auth-client-switch";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useEffect, type FC } from "react";
 import { IntercomProvider } from "react-use-intercom";

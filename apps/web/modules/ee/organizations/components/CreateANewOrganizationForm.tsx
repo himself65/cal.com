@@ -15,8 +15,8 @@ import { Form, Label, TextField, ToggleGroup } from "@calcom/ui/components/form"
 import { RadioAreaGroup as RadioArea } from "@calcom/ui/components/radio";
 import { useOnboarding } from "@calcom/web/modules/ee/organizations/lib/onboardingStore";
 import { useRouter } from "next/navigation";
-import type { SessionContextValue } from "next-auth/react";
-import { useSession } from "next-auth/react";
+import type { SessionContextValue } from "@calcom/features/auth/lib/auth-client-switch";
+import { useSession } from "@calcom/features/auth/lib/auth-client-switch";
 import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 

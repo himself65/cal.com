@@ -30,7 +30,7 @@ import {
 } from "@coss/ui/components/menu";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { signOut } from "next-auth/react";
+import { signOut } from "@calcom/features/auth/lib/auth-client-switch";
 import type { MouseEvent } from "react";
 import { useEffect, useState } from "react";
 

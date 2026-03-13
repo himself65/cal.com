@@ -1,7 +1,7 @@
 import { TooltipProvider } from "@radix-ui/react-tooltip";
 import { act, fireEvent, render, screen } from "@testing-library/react";
 import type { Session } from "next-auth";
-import { SessionProvider } from "next-auth/react";
+import { SessionProvider } from "@calcom/features/auth/lib/auth-client-switch";
 import { vi } from "vitest";
 
 import { RouteActionType } from "@calcom/app-store/routing-forms/zod";

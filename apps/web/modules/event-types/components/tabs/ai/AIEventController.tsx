@@ -1,5 +1,5 @@
 import * as RadioGroup from "@radix-ui/react-radio-group";
-import { useSession } from "next-auth/react";
+import { useSession } from "@calcom/features/auth/lib/auth-client-switch";
 import React, { useState } from "react";
 import { useFormContext, Controller } from "react-hook-form";
 import { z } from "zod";

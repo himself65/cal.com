@@ -1,4 +1,4 @@
-import { useSession } from "next-auth/react";
+import { useSession } from "@calcom/features/auth/lib/auth-client-switch";
 import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import posthog from "posthog-js";

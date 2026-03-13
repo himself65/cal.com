@@ -1,5 +1,5 @@
-import type { SessionContextValue } from "next-auth/react";
-import { signIn } from "next-auth/react";
+import type { SessionContextValue } from "@calcom/features/auth/lib/auth-client-switch";
+import { signIn } from "@calcom/features/auth/lib/auth-client-switch";
 
 import { useLocale } from "@calcom/lib/hooks/useLocale";
 import { TopBanner } from "@calcom/ui/components/top-banner";

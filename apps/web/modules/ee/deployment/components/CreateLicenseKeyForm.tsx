@@ -1,8 +1,8 @@
 "use client";
 
-import type { SessionContextValue } from "next-auth/react";
+import type { SessionContextValue } from "@calcom/features/auth/lib/auth-client-switch";
 import { CheckIcon, CopyIcon } from "lucide-react";
-import { useSession } from "next-auth/react";
+import { useSession } from "@calcom/features/auth/lib/auth-client-switch";
 import { useCallback, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 

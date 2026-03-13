@@ -1,5 +1,5 @@
 import { useMutation } from "@tanstack/react-query";
-import { useSession } from "next-auth/react";
+import { useSession } from "@calcom/features/auth/lib/auth-client-switch";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";

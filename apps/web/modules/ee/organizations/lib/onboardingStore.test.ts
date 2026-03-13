@@ -3,7 +3,7 @@
  */
 // @ts-nocheck - Test file with mock type compatibility issues that don't affect test functionality
 import { renderHook, act, waitFor } from "@testing-library/react";
-import { useSession } from "next-auth/react";
+import { useSession } from "@calcom/features/auth/lib/auth-client-switch";
 import { useSearchParams, useRouter, usePathname } from "next/navigation";
 import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
 

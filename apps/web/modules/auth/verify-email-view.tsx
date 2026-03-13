@@ -1,6 +1,6 @@
 "use client";
 
-import { signOut, useSession } from "next-auth/react";
+import { useSession } from "@calcom/features/auth/lib/auth-client-switch";
 import { useRouter } from "next/navigation";
 import posthog from "posthog-js";
 import { useEffect } from "react";
@@ -83,25 +83,16 @@ function VerifyEmailPage() {
                     </Button>
                   ))}
                 </div>
-                <div className="flex flex-col items-center gap-2">
-                  <Button
-                    color="minimal"
-                    loading={mutation.isPending}
-                    onClick={() => {
-                      posthog.capture("verify_email_resend_clicked");
-                      showToast(t("send_email"), "success");
-                      mutation.mutate();
-                    }}>
-                    {t("resend_email")}
-                  </Button>
-                  <Button
-                    color="minimal"
-                    onClick={() => {
-                      signOut({ callbackUrl: "/signup" });
-                    }}>
-                    {t("use_different_email")}
-                  </Button>
-                </div>
+                <Button
+                  color="minimal"
+                  loading={mutation.isPending}
+                  onClick={() => {
+                    posthog.capture("verify_email_resend_clicked");
+                    showToast(t("send_email"), "success");
+                    mutation.mutate();
+                  }}>
+                  {t("resend_email")}
+                </Button>
               </>
             }
           />

@@ -1,6 +1,6 @@
 "use client";
 
-import { useSession } from "next-auth/react";
+import { useSession } from "@calcom/features/auth/lib/auth-client-switch";
 
 import { useLocale } from "@calcom/lib/hooks/useLocale";
 import { SkeletonContainer, SkeletonText } from "@calcom/ui/components/skeleton";

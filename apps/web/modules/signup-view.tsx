@@ -45,7 +45,7 @@ import dynamic from "next/dynamic";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import Script from "next/script";
-import { signIn } from "next-auth/react";
+import { signIn } from "@calcom/features/auth/lib/auth-client-switch";
 import posthog from "posthog-js";
 import { useEffect, useState } from "react";
 import type { SubmitHandler } from "react-hook-form";

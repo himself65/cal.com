@@ -1,6 +1,6 @@
 "use client";
 
-import { useSession } from "next-auth/react";
+import { useSession } from "@calcom/features/auth/lib/auth-client-switch";
 import { useRouter } from "next/navigation";
 
 import { useOnboarding } from "@calcom/web/modules/ee/organizations/lib/onboardingStore";

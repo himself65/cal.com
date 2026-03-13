@@ -1,7 +1,8 @@
 import { TooltipProvider } from "@radix-ui/react-tooltip";
 import type { Session } from "next-auth";
-import { useSession } from "next-auth/react";
 import { ThemeProvider } from "next-themes";
+
+import { useSession } from "@calcom/features/auth/lib/compat/useSession";
 import type { AppProps as NextAppProps } from "next/app";
 import type { ReadonlyURLSearchParams } from "next/navigation";
 import { usePathname, useSearchParams } from "next/navigation";

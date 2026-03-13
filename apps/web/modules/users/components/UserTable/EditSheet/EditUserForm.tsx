@@ -1,5 +1,5 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useSession } from "next-auth/react";
+import { useSession } from "@calcom/features/auth/lib/auth-client-switch";
 import type { Dispatch } from "react";
 import { useMemo, useState } from "react";
 import { Controller, useForm, useFormContext } from "react-hook-form";

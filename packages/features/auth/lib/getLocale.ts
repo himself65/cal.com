@@ -1,42 +1,52 @@
 import { parse } from "accept-language-parser";
 import { lookup } from "bcp-47-match";
-import type { GetTokenParams } from "next-auth/jwt";
-import { getToken } from "next-auth/jwt";
 
 import { i18n } from "@calcom/i18n/next-i18next.config";
+
+import { auth } from "./better-auth";
 
 type ReadonlyHeaders = Awaited<ReturnType<typeof import("next/headers").headers>>;
 type ReadonlyRequestCookies = Awaited<ReturnType<typeof import("next/headers").cookies>>;
 
+type ReqLike =
+  | { headers: Record<string, string | string[] | undefined>; cookies?: Record<string, string> }
+  | { cookies: ReadonlyRequestCookies; headers: ReadonlyHeaders };
+
 /**
- * This is a slimmed down version of the `getServerSession` function from
- * `next-auth`.
- *
- * Instead of requiring the entire options object for NextAuth, we create
- * a compatible session using information from the incoming token.
- *
- * The downside to this is that we won't refresh sessions if the users
- * token has expired (30 days). This should be fine as we call `/auth/session`
- * frequently enough on the client-side to keep the session alive.
+ * Build a standard Headers object from the various request types.
  */
-export const getLocale = async (
-  req:
-    | GetTokenParams["req"]
-    | {
-        cookies: ReadonlyRequestCookies;
-        headers: ReadonlyHeaders;
+function toHeaders(req: ReqLike): Headers {
+  const headers = new Headers();
+  if (req.headers instanceof Headers) {
+    req.headers.forEach((value, key) => headers.set(key, value));
+  } else {
+    for (const [key, value] of Object.entries(req.headers)) {
+      if (value === undefined) continue;
+      if (Array.isArray(value)) {
+        for (const v of value) headers.append(key, v);
+      } else {
+        headers.set(key, value);
       }
-): Promise<string> => {
-  const token = await getToken({
-    req: req as GetTokenParams["req"],
-  });
+    }
+  }
+  return headers;
+}
 
-  const tokenLocale = token?.["locale"];
-
-  if (tokenLocale) {
-    return tokenLocale;
+/**
+ * Extracts the user's locale. Tries the better-auth session first,
+ * then falls back to the Accept-Language header.
+ */
+export const getLocale = async (req: ReqLike): Promise<string> => {
+  // Try better-auth session for locale
+  try {
+    const session = await auth.api.getSession({ headers: toHeaders(req) });
+    const locale = (session?.user as Record<string, unknown> | undefined)?.locale as string | undefined;
+    if (locale) return locale;
+  } catch {
+    // No session — fall through to Accept-Language
   }
 
+  // Fall back to Accept-Language header
   const acceptLanguage =
     req.headers instanceof Headers ? req.headers.get("accept-language") : req.headers["accept-language"];
 
@@ -45,17 +55,10 @@ export const getLocale = async (
   const code: string = languages[0]?.code ?? "";
   const region: string = languages[0]?.region ?? "";
 
-  // the code should consist of 2 or 3 lowercase letters
-  // the regex underneath is more permissive
   const testedCode = /^[a-zA-Z]+$/.test(code) ? code : "en";
-
-  // the code should consist of either 2 uppercase letters or 3 digits
-  // the regex underneath is more permissive
   const testedRegion = /^[a-zA-Z0-9]+$/.test(region) ? region : "";
 
   const requestedLocale = `${testedCode}${testedRegion !== "" ? "-" : ""}${testedRegion}`;
 
-  // use fallback to closest supported locale.
-  // for instance, es-419 will be transformed to es
   return lookup(i18n.locales, requestedLocale) ?? requestedLocale;
 };

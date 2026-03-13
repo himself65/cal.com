@@ -2,7 +2,7 @@
 
 import type { OptInFeatureConfig } from "@calcom/features/feature-opt-in/config";
 import { isENVDev } from "@calcom/lib/env";
-import { useSession } from "next-auth/react";
+import { useSession } from "@calcom/features/auth/lib/auth-client-switch";
 import { useCallback, useEffect, useRef, useState } from "react";
 import {
   getFeatureOptInTimestamp,

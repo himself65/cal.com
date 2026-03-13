@@ -18,7 +18,7 @@ import {
   DropdownMenuTrigger,
 } from "@calcom/ui/components/dropdown";
 import { Icon, type IconName } from "@calcom/ui/components/icon";
-import { useSession } from "next-auth/react";
+import { useSession } from "@calcom/features/auth/lib/auth-client-switch";
 import { useMemo, useState } from "react";
 import { DeleteSegmentDialog } from "./DeleteSegmentDialog";
 import { DuplicateSegmentDialog } from "./DuplicateSegmentDialog";

@@ -1,4 +1,4 @@
-import { useSession } from "next-auth/react";
+import { useSession } from "@calcom/features/auth/lib/auth-client-switch";
 import type { InputHTMLAttributes, ReactNode } from "react";
 import { forwardRef, useState } from "react";
 

@@ -1,10 +1,10 @@
 "use client";
 
 import { TrpcProvider } from "app/_trpc/trpc-provider";
-import { SessionProvider } from "next-auth/react";
 import CacheProvider from "react-inlinesvg/provider";
 import { ToastProvider } from "@coss/ui/components/toast";
 
+import { SessionProvider } from "@calcom/features/auth/lib/compat/SessionProvider";
 import { WebPushProvider } from "@calcom/web/modules/notifications/components/WebPushContext";
 import { NotificationSoundHandler } from "@calcom/web/components/notification-sound-handler";
 

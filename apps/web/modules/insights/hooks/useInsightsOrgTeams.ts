@@ -1,4 +1,4 @@
-import { useSession } from "next-auth/react";
+import { useSession } from "@calcom/features/auth/lib/auth-client-switch";
 import { useContext } from "react";
 
 import { InsightsOrgTeamsContext } from "../components/context/InsightsOrgTeamsProvider";

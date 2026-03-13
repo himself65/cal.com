@@ -1,4 +1,4 @@
-import { useSession } from "next-auth/react";
+import { useSession } from "@calcom/features/auth/lib/auth-client-switch";
 import { useState } from "react";
 
 import { ENABLE_PROFILE_SWITCHER } from "@calcom/lib/constants";

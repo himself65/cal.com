@@ -148,6 +148,20 @@ export class UsersRepository {
     });
   }
 
+  async findBySessionToken(sessionToken: string) {
+    const session = await this.dbRead.prisma.session.findUnique({
+      where: { sessionToken },
+      select: {
+        userId: true,
+        expires: true,
+      },
+    });
+
+    if (!session || session.expires < new Date()) return null;
+
+    return this.findByIdWithProfile(session.userId);
+  }
+
   async findByEmailWithProfile(email: string) {
     return this.dbRead.prisma.user.findUnique({
       where: {

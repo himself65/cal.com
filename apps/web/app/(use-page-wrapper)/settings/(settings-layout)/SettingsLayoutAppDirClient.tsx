@@ -1,8 +1,16 @@
 "use client";
 
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@radix-ui/react-collapsible";
+import { useSession } from "@calcom/features/auth/lib/auth-client-switch";
+import Image from "next/image";
+import Link from "next/link";
+import { usePathname, useRouter } from "next/navigation";
+import type { ComponentProps } from "react";
+import React, { useEffect, useState, useMemo } from "react";
+
 import { checkAdminOrOwner } from "@calcom/features/auth/lib/checkAdminOrOwner";
-import type { OrganizationBranding } from "@calcom/features/ee/organizations/context/provider";
 import { useOrgBranding } from "@calcom/features/ee/organizations/context/provider";
+import type { OrganizationBranding } from "@calcom/features/ee/organizations/context/provider";
 import {
   HAS_ORG_OPT_IN_FEATURES,
   HAS_TEAM_OPT_IN_FEATURES,
@@ -27,13 +35,7 @@ import { ArrowLeftIcon, ChevronDownIcon, ChevronRightIcon } from "@coss/ui/icons
 import type { VerticalTabItemProps } from "@calcom/ui/components/navigation";
 import { VerticalTabItem } from "@calcom/ui/components/navigation";
 import { Skeleton } from "@calcom/ui/components/skeleton";
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@radix-ui/react-collapsible";
-import Image from "next/image";
-import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
-import { useSession } from "next-auth/react";
-import type { ComponentProps } from "react";
-import React, { useEffect, useMemo, useState } from "react";
+
 import Shell from "~/shell/Shell";
 
 const getTabs = (orgBranding: OrganizationBranding | null) => {
@@ -507,34 +509,18 @@ const TeamRolesNavItem = ({
     feature: "pbac",
   });
 
-  // For sub-teams with PBAC-enabled parent org: show functional roles page
-  if (team.parentId && isPbacEnabled) {
-    return (
-      <VerticalTabItem
-        name={t("roles_and_permissions")}
-        href={`/settings/teams/${team.id}/roles`}
-        trackingMetadata={{ section: "team", page: "roles_and_permissions", teamId: team.id }}
-        textClassNames="px-3 text-emphasis font-medium text-sm"
-        disableChevron
-      />
-    );
-  }
+  // Only show for sub-teams (teams with parentId) AND when parent has PBAC enabled
+  if (!team.parentId || !isPbacEnabled) return null;
 
-  // For standalone teams (not in an org): show upgrade banner page
-  if (!team.parentId) {
-    return (
-      <VerticalTabItem
-        name={t("roles_and_permissions")}
-        href={`/settings/teams/${team.id}/roles`}
-        trackingMetadata={{ section: "team", page: "roles_and_permissions", teamId: team.id }}
-        textClassNames="px-3 text-emphasis font-medium text-sm"
-        className="px-2! me-5 h-7 w-auto"
-        disableChevron
-      />
-    );
-  }
-
-  return null;
+  return (
+    <VerticalTabItem
+      name={t("roles_and_permissions")}
+      href={`/settings/teams/${team.id}/roles`}
+      trackingMetadata={{ section: "team", page: "roles_and_permissions", teamId: team.id }}
+      textClassNames="px-3 text-emphasis font-medium text-sm"
+      disableChevron
+    />
+  );
 };
 
 const TeamListCollapsible = ({ teamFeatures }: { teamFeatures?: Record<number, TeamFeatures> }) => {
@@ -661,7 +647,7 @@ const TeamListCollapsible = ({ teamFeatures }: { teamFeatures?: Record<number, T
                   <TeamRolesNavItem team={team} teamFeatures={teamFeatures} />
                   {(checkAdminOrOwner(team.role) ||
                     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-                    // @ts-expect-error this exists wtf?
+                    // @ts-ignore this exists wtf?
                     (team.isOrgAdmin && team.isOrgAdmin)) && (
                     <>
                       {/* TODO */}
@@ -1067,9 +1053,6 @@ type SettingsLayoutProps = {
 
 function SettingsLayoutAppDirClient({ children, teamFeatures, permissions, ...rest }: SettingsLayoutProps) {
   const pathname = usePathname();
-  const isFullWidthPage =
-    pathname?.includes("/settings/teams/") &&
-    (pathname?.includes("/attributes") || pathname?.includes("/roles"));
   const state = useState(false);
   const [sideContainerOpen, setSideContainerOpen] = state;
 
@@ -1109,11 +1092,7 @@ function SettingsLayoutAppDirClient({ children, teamFeatures, permissions, ...re
       }>
       <div className="*:flex-1 flex flex-1">
         <div
-          className={classNames(
-            "mx-auto justify-center",
-            !isFullWidthPage && "max-w-full lg:max-w-3xl",
-            rest.containerClassName
-          )}>
+          className={classNames("mx-auto max-w-full justify-center lg:max-w-3xl", rest.containerClassName)}>
           <ErrorBoundary>{children}</ErrorBoundary>
         </div>
       </div>

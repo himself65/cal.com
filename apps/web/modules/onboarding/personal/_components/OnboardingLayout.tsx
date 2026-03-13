@@ -1,6 +1,6 @@
 "use client";
 
-import { signOut } from "next-auth/react";
+import { signOut } from "@calcom/features/auth/lib/auth-client-switch";
 import type { ReactNode } from "react";
 
 import { useLocale } from "@calcom/lib/hooks/useLocale";

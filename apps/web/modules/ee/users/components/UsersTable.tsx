@@ -1,7 +1,7 @@
 "use client";
 
 import { keepPreviousData } from "@tanstack/react-query";
-import { signIn } from "next-auth/react";
+import { signIn } from "@calcom/features/auth/lib/auth-client-switch";
 import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 

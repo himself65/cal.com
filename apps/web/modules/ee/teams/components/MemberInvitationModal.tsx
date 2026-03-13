@@ -1,4 +1,4 @@
-import { useSession } from "next-auth/react";
+import { useSession } from "@calcom/features/auth/lib/auth-client-switch";
 import posthog from "posthog-js";
 import type { FormEvent } from "react";
 import { useMemo, useRef, useState } from "react";

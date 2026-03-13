@@ -1,7 +1,7 @@
 "use client";
 
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useSession } from "next-auth/react";
+import { useSession } from "@calcom/features/auth/lib/auth-client-switch";
 import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 

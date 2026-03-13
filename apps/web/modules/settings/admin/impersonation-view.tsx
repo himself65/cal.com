@@ -1,6 +1,6 @@
 "use client";
 
-import { signIn } from "next-auth/react";
+import { signIn } from "@calcom/features/auth/lib/auth-client-switch";
 import { useSearchParams } from "next/navigation";
 import { useRef, useEffect, useState } from "react";
 

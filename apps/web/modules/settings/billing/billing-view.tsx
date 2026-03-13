@@ -8,7 +8,7 @@ import { Button } from "@calcom/ui/components/button";
 import { Dialog, DialogContent, DialogFooter, DialogHeader } from "@calcom/ui/components/dialog";
 import { showToast } from "@calcom/ui/components/toast";
 import { usePathname } from "next/navigation";
-import { useSession } from "next-auth/react";
+import { useSession } from "@calcom/features/auth/lib/auth-client-switch";
 import { useMemo, useState } from "react";
 import { ActiveUserBreakdown } from "~/settings/billing/components/ActiveUserBreakdown";
 import BillingCredits from "~/settings/billing/components/BillingCredits";

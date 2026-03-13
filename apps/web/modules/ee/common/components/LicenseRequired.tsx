@@ -1,6 +1,6 @@
 "use client";
 
-import { useSession } from "next-auth/react";
+import { useSession } from "@calcom/features/auth/lib/auth-client-switch";
 import type { AriaRole, ComponentType } from "react";
 import React, { Fragment, useEffect } from "react";
 

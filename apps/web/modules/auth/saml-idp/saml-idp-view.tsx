@@ -1,6 +1,6 @@
 "use client";
 
-import { signIn } from "next-auth/react";
+import { signIn } from "@calcom/features/auth/lib/auth-client-switch";
 import { useEffect } from "react";
 
 // To handle the IdP initiated login flow callback

@@ -1,4 +1,4 @@
-import { useSession } from "next-auth/react";
+import { useSession } from "@calcom/features/auth/lib/auth-client-switch";
 import { useSearchParams, useRouter, usePathname } from "next/navigation";
 import { useEffect } from "react";
 import { create } from "zustand";

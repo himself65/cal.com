@@ -1,6 +1,6 @@
 "use client";
 
-import { signIn } from "next-auth/react";
+import { signIn } from "@calcom/features/auth/lib/auth-client-switch";
 import { useState } from "react";
 
 import { WEBAPP_URL } from "@calcom/lib/constants";

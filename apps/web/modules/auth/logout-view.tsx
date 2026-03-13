@@ -1,6 +1,7 @@
 "use client";
 
-import { signOut, useSession } from "next-auth/react";
+import { signOut } from "@calcom/features/auth/lib/compat/signOut";
+import { useSession } from "@calcom/features/auth/lib/compat/useSession";
 import { useRouter } from "next/navigation";
 import type { ParsedUrlQuery } from "node:querystring";
 import { useEffect, useState } from "react";

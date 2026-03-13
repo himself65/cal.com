@@ -1,4 +1,4 @@
-import { useSession } from "next-auth/react";
+import { useSession } from "@calcom/features/auth/lib/auth-client-switch";
 
 import { appStoreMetadata } from "@calcom/app-store/appStoreMetaData";
 import dayjs from "@calcom/dayjs";

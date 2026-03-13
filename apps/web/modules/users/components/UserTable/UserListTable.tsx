@@ -36,7 +36,7 @@ import {
   useReactTable,
 } from "@tanstack/react-table";
 import { usePathname } from "next/navigation";
-import { useSession } from "next-auth/react";
+import { useSession } from "@calcom/features/auth/lib/auth-client-switch";
 import { parseAsBoolean, useQueryState } from "nuqs";
 import posthog from "posthog-js";
 import { useMemo, useReducer, useState } from "react";

@@ -1,6 +1,6 @@
 "use client";
 
-import { useSession } from "next-auth/react";
+import { useSession } from "@calcom/features/auth/lib/auth-client-switch";
 import { usePathname } from "next/navigation";
 
 import { WEBAPP_URL } from "@calcom/lib/constants";
