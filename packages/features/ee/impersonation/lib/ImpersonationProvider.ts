@@ -1,5 +1,4 @@
 import type { CalSession as Session } from "@calcom/features/auth/lib/better-auth-types";
-import CredentialsProvider from "next-auth/providers/credentials";
 import { z } from "zod";
 
 import { ensureOrganizationIsReviewed } from "@calcom/ee/organizations/lib/ensureOrganizationIsReviewed";
@@ -327,109 +326,11 @@ async function isReturningToSelf({ session, creds }: { session: Session | null; 
   }
 }
 
-const ImpersonationProvider = CredentialsProvider({
-  id: "impersonation-auth",
-  name: "Impersonation",
-  type: "credentials",
-  credentials: {
-    username: { type: "text" },
-    teamId: { type: "text" },
-    returnToId: { type: "text" },
-  },
-  async authorize(creds, req) {
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore need to figure out how to correctly type this
-    const session = await getSession({ req });
-    const teamId = parseTeamId(creds);
-    checkSelfImpersonation(session, creds);
-    checkUserIdentifier(creds);
-
-    // Returning to target and UID is self without having to do perm checks.
-    const returnToUser = await isReturningToSelf({ session, creds });
-    if (returnToUser) {
-      return auditAndReturnNextUser(
-        returnToUser.user,
-        returnToUser.impersonatedByUID,
-        returnToUser.hasTeams,
-        true
-      );
-    }
-
-    checkGlobalPermission(session);
-
-    const impersonatedUser = await getImpersonatedUser({ session, teamId, creds });
-    if (session?.user.role === UserPermissionRole.ADMIN) {
-      if (impersonatedUser.disableImpersonation) {
-        throw new Error("This user has disabled Impersonation.");
-      }
-      return auditAndReturnNextUser(
-        impersonatedUser,
-        session?.user.id as number,
-        impersonatedUser.teams.length > 0 // If the user has any teams, they belong to an active team and we can set the hasActiveTeam ctx to true
-      );
-    }
-
-    await ensureOrganizationIsReviewed(session?.user.org?.id);
-
-    if (!teamId) throw new Error("Error-teamNotFound: You do not have permission to do this.");
-
-    // Check session
-    const sessionUserFromDb = await prisma.user.findUnique({
-      where: {
-        id: session?.user.id,
-      },
-      include: {
-        teams: {
-          where: {
-            AND: [
-              {
-                team: {
-                  id: teamId,
-                },
-              },
-            ],
-          },
-          select: {
-            role: true,
-          },
-        },
-      },
-    });
-
-    if (sessionUserFromDb?.teams.length === 0 || impersonatedUser.teams.length === 0) {
-      throw new Error("Error-UserHasNoTeams: You do not have permission to do this.");
-    }
-
-    // Check PBAC permissions for impersonation
-    const hasImpersonationPermission = await checkPBACImpersonationPermission({
-      userId: session?.user.id as number,
-      teamId,
-      userRole: sessionUserFromDb?.teams[0].role as MembershipRole,
-      organizationId: session?.user.org?.id,
-    });
-
-    if (!hasImpersonationPermission) {
-      throw new Error("You do not have permission to impersonate this user.");
-    }
-
-    // Legacy role check as additional safeguard (PBAC should handle this but keeping for backwards compatibility)
-    // We find team by ID so we know there is only one team in the array
-    if (
-      sessionUserFromDb?.teams[0].role === MembershipRole.ADMIN &&
-      impersonatedUser.teams[0].role === MembershipRole.OWNER
-    ) {
-      throw new Error("You do not have permission to do this.");
-    }
-
-    return auditAndReturnNextUser(
-      impersonatedUser,
-      session?.user.id as number,
-      impersonatedUser.teams.length > 0 // If the user has any teams, they belong to an active team and we can set the hasActiveTeam ctx to true
-    );
-  },
-});
-
-export default ImpersonationProvider;
+/**
+ * The ImpersonationProvider CredentialsProvider has been replaced by
+ * better-auth-impersonation.ts. The helper functions above are still
+ * used by the new impersonation module.
+ */
 
 async function findProfile(returningUser: { id: number; username: string | null }) {
   const allOrgProfiles = await ProfileRepository.findAllProfilesForUserIncludingMovedUser({

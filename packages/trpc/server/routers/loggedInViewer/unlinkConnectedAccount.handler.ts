@@ -16,19 +16,16 @@ type UpdateProfileOptions = {
 
 const unlinkConnectedAccount = async ({ ctx }: UpdateProfileOptions) => {
   const { user } = ctx;
-  // Unlink the account
-  const CalComAdapter = (await import("@calcom/features/auth/lib/next-auth-custom-adapter")).default;
-  const calcomAdapter = CalComAdapter(prisma);
   const provider = user.identityProvider.toLocaleLowerCase();
-  // If it fails to delete, don't stop because the users login data might not be present
+  // Remove the linked account record
   try {
-    // if fn doesn't exist, do nothing.
-    if (calcomAdapter.unlinkAccount) {
-      await calcomAdapter.unlinkAccount({
+    await prisma.account.deleteMany({
+      where: {
         provider,
         providerAccountId: user.identityProviderId || "",
-      });
-    }
+        userId: user.id,
+      },
+    });
   } catch {
     // Fail silently if we don't have a record in the account table
   }

@@ -1,4 +1,3 @@
-/// <reference types="@calcom/types/next-auth" />
 import { getDownloadLinkOfCalVideoByRecordingId } from "@calcom/features/conferencing/lib/videoClient";
 import { IS_SELF_HOSTED } from "@calcom/lib/constants";
 
